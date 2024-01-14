@@ -1,66 +1,4 @@
-// function fetchData() {
-//   fetch('https://api.tarkov.dev/graphql', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Accept': 'application/json',
-//     },
-//     body: JSON.stringify({query: `{
-//       items(name: "Morphine") {
-//     		id
-//         name
-//         shortName
-//     		avg24hPrice
-//     		sellFor {
-//     		  price
-//     		  currency
-//     		  priceRUB
-//     		  source
-//     		}
-//     		usedInTasks {
-//     		  name
-//           }  
-//     		}
-//   }`})
-//   })
-//     .then(r => r.json())
-//     .then(data => console.log('data returned:', data));
-    
 
-
-// }
-
-
-// function fetchData() {
-//   fetch('https://api.tarkov.dev/graphql', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Accept': 'application/json',
-//     },
-//     body: JSON.stringify({query: `{
-//       items(name: "Morphine") {
-//     		id
-//         name
-//         shortName
-//     		avg24hPrice
-//     		sellFor {
-//     		  price
-//     		  currency
-//     		  priceRUB
-//     		  source
-//     		}
-//     		usedInTasks {
-//     		  name
-//           }  
-//     		}
-//   }`})
-//   })
-//     .then(response => response.json())
-//     .then(data => console.log(data))
-//     .catch(error => console.error(error));
-
-// }
 
 {/* <h2 id="itemNameEl">Milk</h2>
         <p id="fleaMarketPriceLabel">Fleamarket price: <span id="fleaMarketPriceEl"></span></p>
@@ -74,6 +12,14 @@ let traderElement = document.getElementById("traderEl");
 let fleaMarketPriceLabelElement = document.getElementById("fleaMarketPriceLabel");
 let traderPriceLabelElement = document.getElementById("traderPriceLabel");
 
+
+var input = document.getElementById("itemName");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("fetchBtn").click();
+  }
+})
 
 function numberWithSpaces(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
