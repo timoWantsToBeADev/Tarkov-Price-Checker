@@ -75,3 +75,7 @@ input{
     margin-top: -10px;
     font-size: 12px;
 }
+
+#fleaMarketPriceEl {
+    color: #04AA6D;
+}
