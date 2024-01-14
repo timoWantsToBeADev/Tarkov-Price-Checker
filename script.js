@@ -190,6 +190,7 @@ async function fetchData(){
     itemNameElement.textContent = `item not found`;
     fleaMarketPriceElement.hidden = true;
     traderPriceLabelElement.hidden = true;
+    fleamarketPriceLabelElement.hidden = true;
     
   }
     
