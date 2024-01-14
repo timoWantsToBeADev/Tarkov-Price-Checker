@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <h2>Get prices for Tarkov items!</h2>
-<input type="text" name="item" id="itemName" placeholder="Enter item...">
+<input type="text" name="item" id="itemName" placeholder="Enter item..." autofocus>
 <label for="item"></label>
 <button type="submit" onclick="fetchData()" id="fetchBtn">Get prices</button><br>
 <div id="items">
@@ -16,6 +16,15 @@
         <h2 id="itemNameEl" hidden>Milk</h2>
         <p id="fleaMarketPriceLabel" hidden>Fleamarket price: <span id="fleaMarketPriceEl"></span></p>
         <p id="traderPriceLabel" hidden>Trader price: <span id="traderPriceEl"></span> by <span id="traderEl"></span></p>
+        <div id="taskTotal" hidden>    
+            <p id="tasksTitleEl">Needed for task:</p>
+            
+            <div id="taskBoardEl">
+                
+            
+            </div>
+        </div>
+        
     </div>    
 
 </div>

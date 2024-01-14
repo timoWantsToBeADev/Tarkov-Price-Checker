@@ -5,14 +5,21 @@
         <p id="traderPriceLabel">Trader price: <span id="traderPriceEl"></span> by <span id="traderEl"></span></p>
     </div>     */}
 
-let itemNameElement = document.getElementById("itemNameEl");
-let fleaMarketPriceElement = document.getElementById("fleaMarketPriceEl");
-let traderPriceElement = document.getElementById("traderPriceEl");
-let traderElement = document.getElementById("traderEl");
-let fleaMarketPriceLabelElement = document.getElementById("fleaMarketPriceLabel");
-let traderPriceLabelElement = document.getElementById("traderPriceLabel");
+let taskIDs = [];
+const itemNameElement = document.getElementById("itemNameEl");
+const fleaMarketPriceElement = document.getElementById("fleaMarketPriceEl");
+const traderPriceElement = document.getElementById("traderPriceEl");
+const traderElement = document.getElementById("traderEl");
+const fleaMarketPriceLabelElement = document.getElementById("fleaMarketPriceLabel");
+const traderPriceLabelElement = document.getElementById("traderPriceLabel");
+
+const taskTotal= document.getElementById("taskTotal");
+const tasksTitle = document.getElementById("tasksTitleEl");
+const taskBoardElement = document.getElementById("taskBoardEl");
 
 
+
+// add "Enter" eventlistener
 var input = document.getElementById("itemName");
 input.addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
@@ -25,23 +32,32 @@ function numberWithSpaces(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
+function clearTasks(){
+ if(taskIDs.length > 0) {
+  taskIDs.forEach(task => {
+    document.getElementById(task).remove()
+      
+  });
 
+}
+
+}
 
 
 function displayData(itemsArray){
-
   let items;
   let fleaPrice;
   let highest = 0;
   let highestTrader = {};
 
   
-  console.log(itemsArray[0].name);
-  console.log(itemsArray[0].sellFor);
+  // console.log(itemsArray[0].name);
+  // console.log(itemsArray[0].sellFor);
 
   const sellForArray = itemsArray[0].sellFor;
   const fleaMarketPrice = sellForArray.filter(fleaMarketPriceGetter)[0].price;
   const traderPrices = sellForArray.filter(traderPricesGetter);
+  
   
   
   // console.log(`the fleamarket price is ${fleaMarketPrice}`)
@@ -66,7 +82,25 @@ function displayData(itemsArray){
                 return sellFor.source === "fleaMarket";
           }
 
-    
+ 
+   itemsArray[0].usedInTasks.forEach(task => {
+        addTask = document.createElement("p");
+        console.log(addTask);
+        addTask.setAttribute("class", "task");
+        addTask.setAttribute("id", task.id);
+        addTask.textContent = task.name;
+        taskBoardElement.appendChild(addTask);
+        taskTotal.hidden = false;
+        taskIDs.push(task.id);
+});  
+
+console.log(taskBoardElement)
+
+
+
+
+
+// DOM manipulation
 itemNameElement.textContent = itemsArray[0].name;
 fleaMarketPriceElement.textContent = `${numberWithSpaces(fleaMarketPrice)} ₽`;
 traderPriceElement.textContent =  `${highestTrader.price} ₽`;
@@ -100,7 +134,7 @@ async function fetchData(){
     
   try {
   const itemName = document.getElementById("itemName").value.toLowerCase();
-  console.log(itemName)
+  clearTasks()
   const response = await  
   fetch('https://api.tarkov.dev/graphql',{
       method: 'POST',
@@ -135,6 +169,7 @@ async function fetchData(){
     items = data.data.items;
     displayData(items)
 
+
   }
   catch(error){
     console.error(error)
@@ -142,6 +177,8 @@ async function fetchData(){
     itemNameElement.textContent = `item not found`;
     traderPriceLabelElement.hidden = true;
     fleaMarketPriceLabelElement.hidden = true;
+    taskTotal.hidden = true;
+    taskIDs = [];
     
   }
     
