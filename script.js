@@ -63,7 +63,7 @@
 // }
 
 {/* <h2 id="itemNameEl">Milk</h2>
-        <p id="fleamarketPriceLabel">Fleamarket price: <span id="fleaMarketPriceEl"></span></p>
+        <p id="fleaMarketPriceLabel">Fleamarket price: <span id="fleaMarketPriceEl"></span></p>
         <p id="traderPriceLabel">Trader price: <span id="traderPriceEl"></span> by <span id="traderEl"></span></p>
     </div>     */}
 
@@ -71,8 +71,14 @@ let itemNameElement = document.getElementById("itemNameEl");
 let fleaMarketPriceElement = document.getElementById("fleaMarketPriceEl");
 let traderPriceElement = document.getElementById("traderPriceEl");
 let traderElement = document.getElementById("traderEl");
-let fleamarketPriceLabelElement = document.getElementById("fleamarketPriceLabel");
+let fleaMarketPriceLabelElement = document.getElementById("fleaMarketPriceLabel");
 let traderPriceLabelElement = document.getElementById("traderPriceLabel");
+
+
+function numberWithSpaces(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
 
 
 
@@ -101,7 +107,7 @@ function displayData(itemsArray){
     if (traderPrices.price > highest) {
       highest = traderPrices.price
       highestTrader = { trader: `${traderPrices.source}`,
-                        price: `${traderPrices.price}`}
+                        price: `${numberWithSpaces(traderPrices.price)}`}
     } 
   });
 
@@ -116,12 +122,12 @@ function displayData(itemsArray){
 
     
 itemNameElement.textContent = itemsArray[0].name;
-fleaMarketPriceElement.textContent = fleaMarketPrice;
-traderPriceElement.textContent =  highestTrader.price;
+fleaMarketPriceElement.textContent = `${numberWithSpaces(fleaMarketPrice)} ₽`;
+traderPriceElement.textContent =  `${highestTrader.price} ₽`;
 traderElement.textContent = highestTrader.trader;
 
 itemNameElement.hidden = false;
-fleamarketPriceLabelElement.hidden  = false;
+fleaMarketPriceLabelElement.hidden  = false;
 traderPriceLabelElement.hidden = false;
 
 
@@ -188,9 +194,8 @@ async function fetchData(){
     console.error(error)
     itemNameElement.hidden = false;
     itemNameElement.textContent = `item not found`;
-    fleaMarketPriceElement.hidden = true;
     traderPriceLabelElement.hidden = true;
-    fleamarketPriceLabelElement.hidden = true;
+    fleaMarketPriceLabelElement.hidden = true;
     
   }
     
