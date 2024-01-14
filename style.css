@@ -69,3 +69,9 @@ input{
 ::placeholder {
     color: white;
 }
+
+
+#highLow {
+    margin-top: -10px;
+    font-size: 12px;
+}

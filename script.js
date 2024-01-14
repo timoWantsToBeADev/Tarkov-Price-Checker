@@ -11,6 +11,7 @@ const fleaMarketPriceElement = document.getElementById("fleaMarketPriceEl");
 const traderPriceElement = document.getElementById("traderPriceEl");
 const traderElement = document.getElementById("traderEl");
 const fleaMarketPriceLabelElement = document.getElementById("fleaMarketPriceLabel");
+const highLowElement = document.getElementById("highLow");
 const traderPriceLabelElement = document.getElementById("traderPriceLabel");
 
 const taskTotal= document.getElementById("taskTotal");
@@ -49,6 +50,8 @@ function displayData(itemsArray){
   let fleaPrice;
   let highest = 0;
   let highestTrader = {};
+  let lowValue = numberWithSpaces(itemsArray[0].low24hPrice);
+  let highValue = numberWithSpaces(itemsArray[0].high24hPrice);
 
   
   // console.log(itemsArray[0].name);
@@ -102,14 +105,16 @@ console.log(taskBoardElement)
 
 // DOM manipulation
 itemNameElement.textContent = itemsArray[0].name;
-fleaMarketPriceElement.textContent = `${numberWithSpaces(fleaMarketPrice)} ₽`;
+fleaMarketPriceElement.textContent = `${numberWithSpaces(fleaMarketPrice)} ₽ average`;
 traderPriceElement.textContent =  `${highestTrader.price} ₽`;
 traderElement.textContent = highestTrader.trader;
+highLowElement.textContent = `24 hour low / high  (${lowValue} ₽ - ${highValue} ₽)`;
+
 
 itemNameElement.hidden = false;
 fleaMarketPriceLabelElement.hidden  = false;
 traderPriceLabelElement.hidden = false;
-
+highLowElement.hidden = false;
 
 
 
@@ -129,6 +134,7 @@ traderPriceLabelElement.hidden = false;
 
 // }
 
+// API CALL TO TARKOV.DEV
 
 async function fetchData(){
     
@@ -148,6 +154,8 @@ async function fetchData(){
             name
             shortName
             avg24hPrice
+            low24hPrice
+    				high24hPrice
             sellFor {
               price
               currency
@@ -179,6 +187,7 @@ async function fetchData(){
     fleaMarketPriceLabelElement.hidden = true;
     taskTotal.hidden = true;
     taskIDs = [];
+    highLowElement.hidden = true;
     
   }
     
